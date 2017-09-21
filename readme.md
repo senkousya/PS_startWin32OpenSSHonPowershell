@@ -26,9 +26,35 @@ PowershellでSSH接続は標準機能でサポートしていない訳ですが�
 
 ## 🔰SSH接続してみる
 
+### 🔰SSH接続に利用するキーペアの登録を行う。
+
+AWS EC2コンソールの中にあるキーペアを選択する。
+
+![](image/aws.console.create.keypair.step001.png)
+
+キーペアの作成を選択する。
+
+![](image/aws.console.create.keypair.step002.png)
+
+キーペア名を入力して作成を選択する。
+
+![](image/aws.console.create.keypair.step003.png)
+
+キーペアが登録されるたのが確認できる。
+
+![](image/aws.console.create.keypair.step004.png)
+
+キーペアが登録され、同時にpemファイルがダウンロードされる。
+
+このpemファイルは再取得は出来ないので大切に保管しましょう。
+
+ちなみに中身はテキストエディタで開くとこんな感じのファイルとなっている。
+
+![](image/pemfile.png)
+
 ### 🔰接続先としてAWS EC2でLinuxインスタンスを立ててみる
 
-SSHの接続先としてAWSで適当なLinuxインスタンスを立ち上げてテストしてみる。
+SSHの接続先としてAWSで適当なLinuxインスタンスを立ち上げて作成したキーペアで接続テストしてみる。
 
 AWSコンソールのEC2からインスタンスの作成
 
@@ -43,6 +69,10 @@ AWSコンソールのEC2からインスタンスの作成
 ![](image/create.instance.step003.png)
 
 SSH接続に利用するpemファイルを指定する
+
+**既存のキーペアの選択**から先程登録したキーペアを選択する。
+
+ちなみに新しいキーペアの作成を選択すれば、この画面からキーペアを作成出来たりもする。
 
 ![](image/create.instance.step004.png)
 
@@ -66,7 +96,15 @@ EC2インスタンスが立ち上がるのを確認
 
 ![](image/connect.ssh.ec2.step002.png)
 
-Powershellでsshコマンドの実行
+```powershell
+
+ssh -i pemファイル ユーザ@host
+
+```
+
+上記のような感じでPowershellでsshコマンドの実行
+
+ちなみに**ec2-user**はAmazonLinuxのデフォルトシステムユーザです。[Linux インスタンスでのユーザーアカウントの管理より](http://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/managing-users.html)
 
 ![](image/connect.ssh.ec2.step003.png)
 
